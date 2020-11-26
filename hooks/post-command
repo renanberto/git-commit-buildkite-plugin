@@ -36,6 +36,7 @@ then
   echo "--- Committing changes"
   git commit -m "${message}"
   echo "--- Pushing to origin"
+  git pull "$remote" "$branch"
   git push "$remote" "$branch"
 else
   echo "--- No changes to commit"
