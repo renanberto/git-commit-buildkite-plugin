@@ -8,6 +8,8 @@ then
   exit 0
 fi
 
+echo "Making the change to the file"
+
 remote=${BUILDKITE_PLUGIN_GIT_COMMIT_REMOTE:-origin}
 branch=${BUILDKITE_PLUGIN_GIT_COMMIT_BRANCH:-${BUILDKITE_BRANCH}}
 message=${BUILDKITE_PLUGIN_GIT_COMMIT_MESSAGE:-"Build #${BUILDKITE_BUILD_NUMBER}"}
@@ -26,17 +28,21 @@ if [[ ${BUILDKITE_PLUGIN_GIT_COMMIT_CREATE_BRANCH:-false} = "true" ]]
 then
   git checkout -b "$branch"
 else
+  echo "Making fetch to branch"
   git fetch "$remote" "$branch:$branch"
   git checkout "$branch"
 fi
+
+echo "Including all files to commit"
 git add -A "${BUILDKITE_PLUGIN_GIT_COMMIT_ADD:-.}"
 
 if ! git diff-index --quiet HEAD
 then
   echo "--- Committing changes"
   git commit -m "${message}"
-  echo "--- Pushing to origin"
+  echo "Making pull"
   git pull "$remote" "$branch"
+  echo "--- Pushing to origin"
   git push "$remote" "$branch"
 else
   echo "--- No changes to commit"
