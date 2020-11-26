@@ -30,6 +30,9 @@ then
 else
   echo "Making fetch to branch"
   git fetch "$remote" "$branch:$branch"
+  echo "Making pull"
+  git pull "$remote" "$branch"
+  echo "Making checkout"
   git checkout "$branch"
 fi
 
@@ -40,8 +43,6 @@ if ! git diff-index --quiet HEAD
 then
   echo "--- Committing changes"
   git commit -m "${message}"
-  echo "Making pull"
-  git pull "$remote" "$branch"
   echo "--- Pushing to origin"
   git push "$remote" "$branch"
 else
