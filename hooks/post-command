@@ -28,10 +28,10 @@ if [[ ${BUILDKITE_PLUGIN_GIT_COMMIT_CREATE_BRANCH:-false} = "true" ]]
 then
   git checkout -b "$branch"
 else
-  echo "Making fetch to branch"
-  git fetch "$remote" "$branch:$branch"
   echo "Making pull"
   git pull "$remote" "$branch"
+  echo "Making fetch to branch"
+  git fetch "$remote" "$branch:$branch"
   echo "Making checkout"
   git checkout "$branch"
 fi
