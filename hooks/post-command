@@ -28,12 +28,12 @@ if [[ ${BUILDKITE_PLUGIN_GIT_COMMIT_CREATE_BRANCH:-false} = "true" ]]
 then
   git checkout -b "$branch"
 else
+  echo "Making checkout"
+  git checkout "$branch"
   echo "Making pull"
   git pull --rebase
   echo "Making fetch to branch"
   git fetch
-  echo "Making checkout"
-  git checkout "$branch"
 fi
 
 echo "Including all files to commit"
